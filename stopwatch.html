@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <style>
+        .main {
+            width: 100%;
+            height: 500px;
+            background-color: rgb(67, 65, 65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .child {
+            width: 200px;
+            height: 120px;
+            background-color: rgb(252, 252, 252);
+        }
+        .time {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            margin: 6px;
+        }
+        .buttons {
+            margin-left: 8px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 8px 13px;
+        }
+        input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            outline: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="child">
+            <div class="time">
+                <input type="text" id="hours">
+                <h1>:</h1>
+                <input type="text" id="minutes">
+                <h1>:</h1>
+                <input type="text" id="seconds">
+            </div>
+            <div class="buttons">
+                <button onclick="start()">Start</button>
+                <button onclick="stop()">Stop</button>
+                <button onclick="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let hours = 0
+    let minutes = 0;
+    let seconds = 0;
+    let time;
+    let runTime = false;
+    function start() {
+        if (runTime) {
+            clearInterval(time);
+        }
+        else {
+            time = setInterval(updateTime, 1000)
+        }
+        runTime = !runTime;
+    }
+    function updateTime() {
+        seconds++;
+        if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        let h1 = document.querySelector("#hours");
+        h1.value = hours
+        let h2 = document.querySelector("#minutes")
+        h2.value = minutes;
+        let h3 = document.querySelector("#seconds")
+        h3.value = seconds
+    }
+    function reset() {
+        clearInterval(time);
+        isRunning = false;
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        document.querySelector("#hours").value = "00";
+        document.querySelector("#minutes").value = "00";
+        document.querySelector("#seconds").value = "00"
+    }
+    function stop() {
+        clearInterval(time)
+    }
+</script>
